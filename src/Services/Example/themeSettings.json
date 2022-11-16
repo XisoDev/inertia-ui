@@ -1,0 +1,10 @@
+{
+    "themeType" : "public",
+    "title": { "ko": "새로운 테마", "en" : "new theme" },
+    "description": { "ko": "예제 테마입니다.", "en" : "example theme." },
+    "menus" : [
+        "main" ,
+        "utility" ,
+        "footer"
+    ]
+}

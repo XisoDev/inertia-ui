@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+
+use Xiso\InertiaUI\Console\CreateThemeCommand;
 use Xiso\InertiaUI\Console\InstallCommand;
+
 use Xiso\InertiaUI\Handlers\ThemeHandler;
 
 class InertiaUIServiceProvider extends ServiceProvider
@@ -32,6 +35,7 @@ class InertiaUIServiceProvider extends ServiceProvider
             $this->commands(
                 commands: [
                     InstallCommand::class,
+                    CreateThemeCommand::class,
                 ],
             );
         }
