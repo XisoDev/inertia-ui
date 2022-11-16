@@ -1,0 +1,24 @@
+{
+    "name": "xiso/inertia-ui",
+    "autoload": {
+        "psr-4": {
+            "Xiso\\InertiaUI\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "xiso",
+            "email": "ceo@amuz.co.kr"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^9.40"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Xiso\\InertiaUI\\InertiaUIServiceProvider"
+            ]
+        }
+    }
+}
