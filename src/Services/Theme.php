@@ -4,8 +4,8 @@ namespace Xiso\InertiaUI\Services;
 Class Theme{
     public string $type = 'public'; // or system
     public string $id = '';
-    public string $title = '';
-    public string $description = '';
+    public array $title = [];
+    public array $description = [];
     public array $options = [];
 
     public bool $current = false;
@@ -18,12 +18,16 @@ Class Theme{
 
             $this->type = $info->themeType;
             $this->id = $id;
-            $this->title = __($info->title ?? 'Untitled');
-            $this->description = __($info->description ?? '');
+            $this->title = $info->title ?? ["ko" => 'Untitled'];
+            $this->description = $info->description ?? [];
 
             $this->options = $info->options ?? [];
             $this->isExists = true;
         }
+    }
+
+    public function isExists():bool {
+        return $this->isExists;
     }
 
     public function setCurrent(){

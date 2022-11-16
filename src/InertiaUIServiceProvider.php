@@ -37,16 +37,20 @@ class InertiaUIServiceProvider extends ServiceProvider
         }
         $this->bootInertia();
 
-        //register hook
-        add_action('siteMenu', function($user) {
-            $user->sendWelcomeMail();
-        }, 20, 1);
-
         //load lang
         $this->loadTranslationsFrom(__DIR__.'/lang', 'inertia-ui');
+
         $this->publishes([
             __DIR__.'/lang' => $this->app->langPath('vendor/xisodev/inertia-ui'),
-        ],'lang');
+        ],'xisoui-lang');
+
+        $this->publishes([
+            __DIR__.'/config/tenancy.php' => config_path('tenancy.php'),
+        ],'xisoui-config');
+
+        $this->publishes([
+            __DIR__.'/database/migrations' => database_path('migrations'),
+        ], 'xisoui-migrations');
     }
 
     /**

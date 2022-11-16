@@ -2,9 +2,9 @@
 
 namespace Xiso\InertiaUI\Handlers;
 
-use App\Models\Domain;
-use App\Models\Tenant;
-use App\Models\ThemeConfig;
+use Xiso\InertiaUI\Models\Domain;
+use Xiso\InertiaUI\Models\Tenant;
+use Xiso\InertiaUI\Models\ThemeConfig;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
@@ -117,9 +117,9 @@ class ThemeHandler{
             if($directory == "." || $directory == "..") continue;
 
             $themeInfo = $this->getTheme($directory);
-            if($themeInfo != false){
-                if(!isset($themeList[$themeInfo['type']])) $themeList[$themeInfo['type']] = [];
-                $themeList[$themeInfo['type']][] = $themeInfo;
+            if($themeInfo->isExists()){
+                if(!isset($themeList[$themeInfo->type])) $themeList[$themeInfo->type] = [];
+                $themeList[$themeInfo->type][] = $themeInfo;
             }
         }
         return $themeList;
