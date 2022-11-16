@@ -14,7 +14,8 @@
     "require": {
         "illuminate/support": "^9.40",
         "illuminate/console": "^9.21",
-        "laravel/fortify": "^1.13.3"
+        "laravel/fortify": "^1.13.3",
+        "millat/laravel-hooks": "^1.2"
     },
     "extra": {
         "laravel": {

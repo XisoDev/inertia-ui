@@ -68,7 +68,7 @@ resolve: (name) => {
 
 파일수정 및 준비가 완료되었다면, 다음 아티산커맨드를 통해 `fieldloader` 가 `resources` 디렉터리 내에 게시될 수 있도록 해야합니다.
 ```shell
-php artisan xiso-ui:install
+php artisan xiso:ui-install
 ```
 
 ### FieldLoader
