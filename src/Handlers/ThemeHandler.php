@@ -23,9 +23,10 @@ class ThemeHandler{
     #[NoReturn] public function __construct($hostname = false)
     {
         $this->defaultThemePath = resource_path('/themes/');
-
-        $tenant = $hostname ? Tenant::where('hostname',$hostname)->with('themeConfig')->first() : $this->getCurrentTenant();
-        if($tenant){
+        $tenant = $hostname ?
+            Tenant::where('hostname',$hostname)->with('themeConfig')->first()
+            : $this->getCurrentTenant();
+        if($tenant->id){
             $this->tenant = $tenant;
             $this->set($tenant->themeConfig->theme_id);
         }else{
