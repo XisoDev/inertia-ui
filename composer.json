@@ -12,7 +12,9 @@
         }
     ],
     "require": {
-        "illuminate/support": "^9.40"
+        "illuminate/support": "^9.40",
+        "illuminate/console": "^9.21",
+        "laravel/fortify": "^1.13.3"
     },
     "extra": {
         "laravel": {
