@@ -5,9 +5,6 @@ namespace Xiso\InertiaUI\Forms;
 use Illuminate\Support\Facades\App;
 
 class Field{
-    private string $currentLocale = '';
-    private array $localeList = [];
-
     public string $type = 'text';
     public string $id = '';
     public mixed $value;
@@ -18,9 +15,10 @@ class Field{
     public bool $isArray = false;
     public bool $isGroup = false;
 
-    public array $title = [];
-    public array $description = [];
-    public array $placeholder = [];
+    public string $title = '';
+    public string $description = '';
+    public string $placeholder = '';
+
     public array $options = [];
 
     public array $attributes = [];
@@ -30,25 +28,9 @@ class Field{
 
     public function __construct($type, $id, $fixed = false)
     {
-        $this->currentLocale = App::currentLocale();
-        $this->localeList = app()->config->get('app.locales');
-
-        //set translators
-        $titles = [];
-        $descriptions = [];
-        $placeholders = [];
-        foreach($this->localeList as $localeId => $localeName){
-            $titles[$localeId] = '';
-            $descriptions[$localeId] = '';
-            $placeholders[$localeId] = '';
-        }
-
         $this->fixed = $fixed;
         $this->type = $type;
         $this->id = $id;
-        $this->title = $titles;
-        $this->description = $descriptions;
-        $this->placeholder = $placeholders;
 
         if($type == 'select') $this->options['_default'] = $this->getOptionObject('');
         if(in_array($type,['list-group','radio-group'])){
@@ -75,27 +57,22 @@ class Field{
         return $this->value;
     }
 
-    public function setTitle($title, $locale = false): static
+    public function setTitle($title): static
     {
-        if(!$locale) $locale = $this->currentLocale;
-        $this->title[$locale] = $title;
-
+        $this->title = __($title);
         return $this;
     }
 
-    public function setDescription($description, $locale = false): static
+    public function setDescription($description): static
     {
-        if(!$locale) $locale = $this->currentLocale;
-        $this->description[$locale] = $description;
-
+        $this->description = __($description);
         return $this;
     }
 
-    public function setPlaceHolder($placeHolder = false, $locale = false): static
+    public function setPlaceHolder($placeHolder = false): static
     {
         if($placeHolder){
-            if(!$locale) $locale = $this->currentLocale;
-            $this->placeholder[$locale] = $placeHolder;
+            $this->placeholder = __($placeHolder);
 
             if($this->type == 'select'){
                 $this->options['_default'] = $this->placeholder;
@@ -127,24 +104,17 @@ class Field{
         return $this;
     }
 
-    public function addOption($value, $text = false, $locale = false): static
+    public function addOption($value, $text = false): static
     {
         if(!isset($this->options[$value]) || !is_array($this->options[$value])) $this->options[$value] = $this->getOptionObject($value);
-
-        if(!$locale) $locale = $this->currentLocale;
-        $this->options[$value]['text'][$locale] = $text;
+        $this->options[$value]['text'] = __($text);
 
         return $this;
     }
 
-    public function addOptionAttr($optionId, $key, $value, $withTranslate = false, $locale = false): static
+    public function addOptionAttr($optionId, $key, $value): static
     {
-        if($withTranslate){
-            if(!$locale) $locale = $this->currentLocale;
-            $this->options[$optionId][$key][$locale] = $value;
-        }else{
-            $this->options[$optionId][$key] = $value;
-        }
+        $this->options[$optionId][$key] = __($value);
 
         return $this;
     }
@@ -158,13 +128,9 @@ class Field{
     }
 
     private function getOptionObject($value){
-        $texts = [];
-        foreach($this->localeList as $localeId => $localeName)
-            $texts[$localeId] = '';
-
         return [
             'value' => $value,
-            'text' => $texts,
+            'text' => '',
         ];
     }
 }

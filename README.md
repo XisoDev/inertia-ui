@@ -71,6 +71,11 @@ resolve: (name) => {
 php artisan xiso:ui-install
 ```
 
+번역, 설정 등의 커스텀을 위해서 다음 명령을 통해 필요한파일을 프로젝트 안으로 퍼블리싱 할 수도 있습니다.
+```shell
+php artisan vendor:publish --provider="Xiso\InertiaUI\InertiaUIServiceProvider"
+```
+
 ### FieldLoader
 
 --- 

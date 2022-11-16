@@ -4,44 +4,28 @@ namespace Xiso\InertiaUI\Forms;
 use Illuminate\Support\Facades\App;
 
 class Span{
-    private string $currentLocale = '';
-    private array $localeList = [];
-
-    public array $content = [];
+    public string $content = '';
     public string $class = '';
 
-    public function __construct($content = '', $locale = false)
+    public function __construct($content = '')
     {
-        $this->currentLocale = App::currentLocale();
-        $this->localeList = app()->config->get('app.locales');
-
-        //set translators
-        $contents = [];
-        foreach($this->localeList as $localeId => $localeName){
-            $contents[$localeId] = '';
-        }
-
-        $this->content = $contents;
-        if($content != ''){
-            if(!$locale) $locale = $this->currentLocale;
-            $this->content[$locale] = $content;
-        }
+        $this->content = __($content);
     }
 
-    public function setContent($content, $locale = false): static
+    public function setContent($content): static
     {
-        if(!$locale) $locale = $this->currentLocale;
-        $this->content[$locale] = $content;
+        $this->content = __($content);
 
         return $this;
     }
 
-
-    public function getClass(){
+    public function getClass(): array
+    {
         return explode(" ",$this->class);
     }
 
-    public function addClass($class){
+    public function addClass($class): static
+    {
         $classes = $this->getClass();
         $addClasses = explode(" ",$class);
         foreach($addClasses as $addClass) $classes[] = $addClass;

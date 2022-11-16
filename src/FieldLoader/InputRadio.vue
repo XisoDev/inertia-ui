@@ -20,7 +20,7 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <div class="mt-1 rounded-md shadow-sm">
         <template v-for="prepend in field['prepends']">
-            <span :class="prepend.class">{{ prepend.content[$page.props.locale] }}</span>
+            <span :class="prepend.class">{{ prepend.content }}</span>
         </template>
         <div v-for="optionGroup in field.options" class="block">
             <label :for="optionGroup.value">{{optionGroup.value}}</label>
@@ -36,7 +36,7 @@ defineExpose({ focus: () => input.value.focus() });
             />
         </div>
         <template v-for="append in field['appends']">
-            <span :class="append.class">{{ append.content[$page.props.locale] }}</span>
+            <span :class="append.class">{{ append.content }}</span>
         </template>
     </div>
 </template>

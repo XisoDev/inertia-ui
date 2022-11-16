@@ -4,12 +4,9 @@ namespace Xiso\InertiaUI\Forms;
 use Illuminate\Support\Facades\App;
 
 class Section{
-    private string $currentLocale = '';
-    private array $localeList = [];
-
     public string $id = '';
-    public array $title = [];
-    public array $description = [];
+    public string $title = '';
+    public string $description = '';
 
     public bool $current = false;
     public bool $withButtons = true;
@@ -18,19 +15,7 @@ class Section{
 
     public function __construct($id)
     {
-        $this->currentLocale = App::currentLocale();
-        $this->localeList = app()->config->get('app.locales');
-
-        $titles = [];
-        $descriptions = [];
-        foreach($this->localeList as $localeId => $localeName){
-            $titles[$localeId] = '';
-            $descriptions[$localeId] = '';
-        }
-
         $this->id = $id;
-        $this->title = $titles;
-        $this->description = $descriptions;
     }
 
     public function getId(): string
@@ -38,19 +23,16 @@ class Section{
         return $this->id;
     }
 
-    public function setTitle($title, $locale = false): static
-    {
-        if(!$locale) $locale = $this->currentLocale;
-        $this->title[$locale] = $title;
 
+    public function setTitle($title): static
+    {
+        $this->title = __($title);
         return $this;
     }
 
-    public function setDescription($description, $locale = false): static
+    public function setDescription($description): static
     {
-        if(!$locale) $locale = $this->currentLocale;
-        $this->description[$locale] = $description;
-
+        $this->description = __($description);
         return $this;
     }
 

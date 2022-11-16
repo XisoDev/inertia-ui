@@ -17,11 +17,11 @@ defineExpose({ focus: () => input.value.focus() });
 
 <template>
     <template v-if="field.type === 'image'">
-        <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title[$page.props.locale] }} </label>
+        <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title }} </label>
         <Image :field="field" v-model="modelValue" @input="$emit('update:modelValue', $event.target.files)" />
     </template>
     <template v-else-if="field.type === 'file'">
-        <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title[$page.props.locale] }} </label>
+        <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title }} </label>
         <File :field="field" v-model="modelValue" @input="$emit('update:modelValue', $event.target.files)" />
     </template>
     <template v-else>

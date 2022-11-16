@@ -36,7 +36,7 @@ defineExpose({ focus: () => input.value.focus() });
                     <!-- Role Name -->
                     <div class="flex items-center">
                         <div class="text-sm text-gray-600" :class="{'font-semibold': modelValue === option.value}">
-                            {{ option.text[$page.props.locale] }}
+                            {{ option.text }}
                         </div>
 
                         <svg
@@ -53,7 +53,7 @@ defineExpose({ focus: () => input.value.focus() });
 
                     <!-- Role Description -->
                     <div class="mt-2 text-xs text-gray-600 text-left" v-if="option.description">
-                        {{ option.description[$page.props.locale] }}
+                        {{ option.description }}
                     </div>
                 </div>
             </button>

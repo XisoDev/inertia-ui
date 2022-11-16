@@ -19,20 +19,20 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <div class="mt-1 rounded-md shadow-sm flex">
         <template v-for="prepend in field['prepends']">
-            <span :class="prepend.class">{{ prepend.content[$page.props.locale] }}</span>
+            <span :class="prepend.class">{{ prepend.content }}</span>
         </template>
         <textarea
             :id="field.id"
             :name="field.id"
             :autocomplete="field.id"
             :rows="field.attributes.rows"
-            :aria-placeholder="field.placeholder[$page.props.locale]"
-            :placeholder="field.placeholder[$page.props.locale]"
+            :aria-placeholder="field.placeholder"
+            :placeholder="field.placeholder"
             v-model="modelValue"
             :class="field.class !== '' ? field.class : 'mt-1 block w-full'"
         ></textarea>
         <template v-for="append in field['appends']">
-            <span :class="append.class">{{ append.content[$page.props.locale] }}</span>
+            <span :class="append.class">{{ append.content }}</span>
         </template>
     </div>
 </template>

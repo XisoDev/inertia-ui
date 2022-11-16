@@ -32,8 +32,6 @@ class InstallCommand extends Command
         $this->info(sprintf("try create symlink %s to %s",$target, $shortcut));
         symlink($target, $shortcut);
 
-        $this->info('SymLink Created.');
-
         return Command::SUCCESS;
     }
 }

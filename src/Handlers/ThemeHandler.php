@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
+use Xiso\InertiaUI\Services\Theme;
 
 class ThemeHandler{
     private string $current = 'default';
@@ -124,29 +125,18 @@ class ThemeHandler{
         return $themeList;
     }
 
-    public function getTheme($themeId = ''): bool|array
+    public function getTheme($themeId = ''):Theme
     {
         if(!$themeId) $themeId = $this->get();
 
         $infoFilePath = sprintf("%s/%s/themeSettings.json",$this->defaultThemePath,$themeId);
-        if(file_exists($infoFilePath)){
-            $info = json_decode(file_get_contents($infoFilePath, true));
+        $theme = new Theme($themeId, $infoFilePath);
+        if($this->current == $themeId) $theme->setCurrent();
 
-            $theme = [];
-            $theme['type'] = $info->themeType;
-            $theme['id'] = $themeId;
-            $theme['title'] = (array) $info->title ?? [ "ko" => "" ];
-            $theme['description'] = $info->description ?? [ "ko" => "" ];
-            $theme['options'] = $info->options ?? [];
-            $theme['current'] = $this->current == $themeId;
-
-            return $theme;
-        }else{
-            return false;
-        }
+        return $theme;
     }
 
-    public function getThemeByConfigId($configId): bool|array
+    public function getThemeByConfigId($configId): bool|Theme
     {
         $themeConfig = ThemeConfig::find($configId);
         if($themeConfig == null) return false;
