@@ -11,6 +11,8 @@ Class Theme{
     public bool $current = false;
     public bool $isExists = false;
 
+    public array $menuList = [];
+
     public function __construct($id, $infoFilePath)
     {
         if(file_exists($infoFilePath)){
@@ -18,8 +20,12 @@ Class Theme{
 
             $this->type = $info->themeType;
             $this->id = $id;
-            $this->title = $info->title ?? ["ko" => 'Untitled'];
-            $this->description = $info->description ?? [];
+            $this->title = (array) $info->title ?? [
+                    "ko" => 'Untitled'
+                ];
+            $this->description = (array) $info->description ?? [];
+
+            $this->menuList = (array) $info->menus;
 
             $this->options = $info->options ?? [];
             $this->isExists = true;

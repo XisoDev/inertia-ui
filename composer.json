@@ -15,7 +15,8 @@
         "illuminate/support": "^9.40",
         "illuminate/console": "^9.21",
         "laravel/fortify": "^1.13.3",
-        "spatie/laravel-menu": "^4.1"
+        "lavary/laravel-menu": "~1.8.3",
+        "millat/laravel-hooks": "1.2.1"
     },
     "extra": {
         "laravel": {

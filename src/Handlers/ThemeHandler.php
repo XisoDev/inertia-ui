@@ -5,6 +5,7 @@ namespace Xiso\InertiaUI\Handlers;
 use Xiso\InertiaUI\Models\Domain;
 use Xiso\InertiaUI\Models\Tenant;
 use Xiso\InertiaUI\Models\ThemeConfig;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
@@ -12,17 +13,23 @@ use JetBrains\PhpStorm\NoReturn;
 use JetBrains\PhpStorm\Pure;
 use Xiso\InertiaUI\Services\Theme;
 
+use Lavary\Menu\Builder as MenuBuilder;
+
+
 class ThemeHandler{
     private string $current = 'default';
 
     private string $defaultThemePath = '';
     private string $themePath = '';
+    private Theme $theme;
 
-    private array $menuList = [];
+    public MenuHandler $menuHandler;
 
     #[NoReturn] public function __construct($hostname = false)
     {
         $this->defaultThemePath = resource_path('/themes/');
+        $this->menuHandler = new MenuHandler();
+
         $tenant = $hostname ?
             Tenant::where('hostname',$hostname)->with('themeConfig')->first()
             : $this->getCurrentTenant();
@@ -59,11 +66,14 @@ class ThemeHandler{
         return $this->themePath;
     }
 
-    public function set($theme): bool
+    public function set($themeId): bool
     {
-        if($this->getThemePath($theme)){
-            $this->current = $theme;
-            $this->themePath = 'themes/' . $theme;
+        if($this->getThemePath($themeId)){
+            $this->current = $themeId;
+            $this->themePath = 'themes/' . $themeId;
+            $this->theme = $this->getTheme($themeId);
+
+            $this->menuHandler->setMenuList($this->theme->menuList);
 
             Inertia::share('path',$this->themePath . "/Pages/");
             return true;
@@ -72,42 +82,9 @@ class ThemeHandler{
         }
     }
 
-    public function setMenuList(array $menuList = []){
-        $this->menuList = $menuList;
-    }
-
-    public function setMenu($menu_id, array $menuList = []){
-        $this->menuList[$menu_id] = $menuList;
-    }
-
-    public function getMenuList(array $menuList = []): array
+    public function getMenu($menu_id): MenuBuilder
     {
-        $arrangedMenuList = [];
-        foreach($this->menuList as $menu_id => $menu){
-            $arrangedMenuList[$menu_id] = $this->getMenu($menu_id);
-        }
-        return $arrangedMenuList;
-    }
-
-    public function getMenu($menu_id){
-        $menu = $this->menuList[$menu_id];
-
-        foreach($menu as $key => $menuItem){
-            $menu[$key] = $this->arrangeMenuChildren($menuItem);
-        }
-
-        return $menu;
-    }
-
-    public function addMenu($menu_id, $menuItem, $order = false){
-        if($order !== false){
-            $originalMenu = $this->menuList[$menu_id];
-            $prevMenu = array_slice($this->menuList[$menu_id],0,$order);
-            $nextMenu = array_slice($this->menuList[$menu_id],$order,count($originalMenu));
-            $this->menuList[$menu_id] = array_merge($prevMenu,[$menuItem],$nextMenu);
-        }else{
-            $this->menuList[$menu_id][] = $menuItem;
-        }
+        return $this->menuHandler->get($menu_id);
     }
 
     public function getThemeList(): array
@@ -147,8 +124,7 @@ class ThemeHandler{
 
     public function render($component, array $props = []): \Inertia\Response
     {
-        //share arranged menu list
-        Inertia::share('menuList',$this->getMenuList());
+        Inertia::share('menuList',$this->menuHandler->getMenuObject());
         Inertia::share('locale',App::currentLocale());
 
         $component = [
