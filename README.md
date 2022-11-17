@@ -71,6 +71,14 @@ resolve: (name) => {
 php artisan xiso:ui-install
 ```
 
+올바른 UI의 구현을 위해 일부 프론트앤드 패키지가 추가되어야 합니다.
+```shell
+npm install @headlessui/vue
+npm install @heroicons/vue
+npm install vue-upload-drop-images --save
+
+```
+
 번역, 설정 등의 커스텀을 위해서 다음 명령을 통해 필요한파일을 프로젝트 안으로 퍼블리싱 할 수도 있습니다.
 ```shell
 php artisan vendor:publish --provider="Xiso\InertiaUI\InertiaUIServiceProvider"

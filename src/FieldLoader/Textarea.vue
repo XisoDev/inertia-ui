@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     modelValue: String,
     field: Object,
 });
@@ -28,7 +28,7 @@ defineExpose({ focus: () => input.value.focus() });
             :rows="field.attributes.rows"
             :aria-placeholder="field.placeholder"
             :placeholder="field.placeholder"
-            v-model="modelValue"
+            v-model="props.modelValue"
             :class="field.class !== '' ? field.class : 'mt-1 block w-full'"
         ></textarea>
         <template v-for="append in field['appends']">

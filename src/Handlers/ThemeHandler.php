@@ -103,7 +103,7 @@ class ThemeHandler{
         return $themeList;
     }
 
-    public function getTheme($themeId = ''):Theme
+    public function getTheme($themeId = false):Theme
     {
         if(!$themeId) $themeId = $this->get();
 

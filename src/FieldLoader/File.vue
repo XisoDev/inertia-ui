@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     modelValue: Object,
     field: Object,
 });
@@ -28,7 +28,7 @@ defineExpose({ focus: () => input.value.focus() });
                 :id="field.id"
                 :name="field.id"
                 :class="field.class !== '' ? field.class : 'mt-1 block w-full'"
-                v-model="modelValue"
+                v-model="props.modelValue"
             >
         </div>
         <template v-for="append in field['appends']">

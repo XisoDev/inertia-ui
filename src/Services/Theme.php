@@ -1,17 +1,20 @@
 <?php
 namespace Xiso\InertiaUI\Services;
 
+use Xiso\InertiaUI\Handlers\FormHandler;
+
 Class Theme{
     public string $type = 'public'; // or system
     public string $id = '';
     public array $title = [];
     public array $description = [];
-    public array $options = [];
-
     public bool $current = false;
+
     public bool $isExists = false;
 
     public array $menuList = [];
+    public array $options = [];
+    public FormHandler $configForm;
 
     public function __construct($id, $infoFilePath)
     {
@@ -27,8 +30,11 @@ Class Theme{
 
             $this->menuList = (array) $info->menus;
 
-            $this->options = $info->options ?? [];
+            $this->options = (array) $info->options ?? [];
             $this->isExists = true;
+
+            $this->configForm = new FormHandler();
+            $this->configForm->createFromArray($this->options);
         }
     }
 

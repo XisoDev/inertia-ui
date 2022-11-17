@@ -1,8 +1,12 @@
 <script setup>
-defineProps({
+import { ref } from 'vue';
+const props = defineProps({
     modelValue: String,
     field: Object,
 });
+
+const input = ref(props.modelValue);
+
 defineEmits(['update:modelValue']);
 </script>
 
@@ -19,7 +23,7 @@ defineEmits(['update:modelValue']);
 
             :aria-placeholder="field.placeholder"
             :placeholder="field.placeholder"
-            v-model="modelValue"
+            v-model="input"
             :class="[field.class !== '' ? field.class : 'mt-1 block w-full', 'disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500']"
             :disabled="field.disabled === true"
         />

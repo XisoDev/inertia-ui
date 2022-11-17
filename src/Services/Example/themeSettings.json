@@ -6,5 +6,22 @@
         "main",
         "utility" ,
         "footer"
-    ]
+    ],
+    "options" : {
+        "default": {
+            "title": { "ko": "테마옵션" },
+            "description": { "ko": "기본 설정을 위한 섹션입니다." },
+            "items": {
+                "sampleText": {
+                    "type": "text",
+                    "title": {
+                        "ko": "샘플"
+                    },
+                    "description": {
+                        "ko": "설정 저장 샘플"
+                    }
+                }
+            }
+        }
+    }
 }
