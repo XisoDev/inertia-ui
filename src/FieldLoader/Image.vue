@@ -9,7 +9,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const input = ref(null);
+const input = ref(props.modelValue);
 
 onMounted(() => {
 
@@ -17,7 +17,8 @@ onMounted(() => {
 
 //methods
 function handleImages(files){
-    emit("update:modelValue", files);
+    input.value = files;
+    // emit("update:modelValue", files);
 }
 
 defineExpose({ focus: () => input.value.focus() });

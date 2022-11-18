@@ -28,7 +28,6 @@ class MenuHandler extends Menu
         foreach($this->all() as $menuId => $menu){
             $menuList[$menuId] = [];
             foreach($menu->topMenu()->sortBy('order')->all() as $menuItem){
-                $menuItem->url = $menuItem->url();
                 $menuList[$menuId][] = $this->buildMenuTree($menuItem);
             }
         }
@@ -36,6 +35,7 @@ class MenuHandler extends Menu
     }
 
     private function buildMenuTree($menuItem){
+        $menuItem->url = $menuItem->url();
         $menuItem->children = [];
         if($menuItem->hasChildren()){
             $menuItem->url = $menuItem->url();

@@ -1,20 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,watch } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import { CheckIcon } from '@heroicons/vue/outline'
 
 const props = defineProps({
     modelValue: String,
     field: Object,
-})
+});
 
+const input = ref(props.modelValue);
 const emit = defineEmits(['update:modelValue'])
+//
+watch(input, (x) => {
+    // props.modelValue = x;
+    emit('update:modelValue', x);
+})
 </script>
 
 <template>
-    <RadioGroup class="mt-2"
-        :modelValue="modelValue"
-        @update:modelValue="value => emit('update:modelValue', value)">
+    <RadioGroup v-model="input">
         <template v-for="optionGroup in field.groups">
             <div class="mb-6">
                 <div class="flex items-center justify-between my-3">

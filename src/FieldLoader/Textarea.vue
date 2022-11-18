@@ -8,7 +8,7 @@ const props = defineProps({
 
 defineEmits(['update:modelValue']);
 
-const input = ref(null);
+const input = ref(props.modelValue);
 
 onMounted(() => {
 });
@@ -28,7 +28,7 @@ defineExpose({ focus: () => input.value.focus() });
             :rows="field.attributes.rows"
             :aria-placeholder="field.placeholder"
             :placeholder="field.placeholder"
-            v-model="props.modelValue"
+            v-model="input"
             :class="field.class !== '' ? field.class : 'mt-1 block w-full'"
         ></textarea>
         <template v-for="append in field['appends']">

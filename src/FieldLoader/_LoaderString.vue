@@ -34,9 +34,7 @@ defineExpose({ focus: () => input.value.focus() });
     </template>
     <template v-else-if="field.type === 'radio-group'">
         <h4 class="block text-md font-medium text-gray-700 mb-4"> {{ field.title }} </h4>
-        <RadioGroups :field="field" v-model="props.modelValue"
-                     :modelValue="props.modelValue"
-                     @update:modelValue="value => $emit('update:modelValue', value)" />
+        <RadioGroups :field="field" v-model="props.modelValue" @update:modelValue="value => $emit('update:modelValue', value)" />
         <p v-if="field.description" class="text-sm text-gray-500"> {{ field.description }} </p>
     </template>
     <template v-else-if="field.type === 'radio'">

@@ -2,17 +2,19 @@
 
 namespace Xiso\InertiaUI\Models;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
-use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Xiso\InertiaUI\Handlers\FormHandler;
 use Xiso\InertiaUI\Forms\Span;
 
-class Tenant extends BaseTenant implements TenantWithDatabase
+class Tenant extends BaseTenant  implements HasMedia
 {
+    use InteractsWithMedia;
     use HasTranslations;
     use HasDatabase, HasDomains;
     public array $translatable = ['title','description'];

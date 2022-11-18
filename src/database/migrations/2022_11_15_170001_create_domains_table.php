@@ -20,7 +20,7 @@ class CreateDomainsTable extends Migration
             $table->string('domain', 255)->unique();
             $table->foreignUuid('tenant_id');
 
-            $table->string('to_redirect',255);
+            $table->string('to_redirect',255)->nullable();
             $table->boolean('is_ssl')->nullable()->default(false);
             $table->boolean('is_default')->nullable()->default(false);
 

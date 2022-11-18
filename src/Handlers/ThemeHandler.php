@@ -87,6 +87,18 @@ class ThemeHandler{
         return $this->menuHandler->get($menu_id);
     }
 
+    public function getThemeTypeList(){
+        return apply_filters('theme_type_list', [
+            'system' => [
+                'title' => __('시스템'),
+                'description' => __('시스템에서 사용되는 테마입니다. 변경되거나 Super Admin 권한이 없는경우 선택할 수 없습니다.'),
+            ],
+            'public' => [
+                'title' => __('일반'),
+                'description' => __('일반적으로 공개되는 테마입니다. 테넌트가 생성될 때 할당 가능한 테마입니다.'),
+            ]
+        ]);
+    }
     public function getThemeList(): array
     {
         $themeDirectories = scandir($this->defaultThemePath);
@@ -126,8 +138,7 @@ class ThemeHandler{
     {
         $primary_menu = $this->menuHandler->get($this->theme->primaryMenuId);
         Inertia::share('menuList',$this->menuHandler->getMenuObject());
-        Inertia::share('breadCrumb',$primary_menu->crumbMenu()->all());
-
+        if($primary_menu->active()) Inertia::share('breadCrumb',$primary_menu->crumbMenu()->all());
         Inertia::share('locale',App::currentLocale());
 
         $component = [
