@@ -12,6 +12,7 @@ Class Theme{
 
     public bool $isExists = false;
 
+    public String $primaryMenuId = '';
     public array $menuList = [];
     public array $options = [];
     public FormHandler $configForm;
@@ -29,6 +30,7 @@ Class Theme{
             $this->description = (array) $info->description ?? [];
 
             $this->menuList = (array) $info->menus;
+            $this->primaryMenuId = $info->primary_menu ?? '';
 
             $this->options = (array) $info->options ?? [];
             $this->isExists = true;

@@ -124,7 +124,10 @@ class ThemeHandler{
 
     public function render($component, array $props = []): \Inertia\Response
     {
+        $primary_menu = $this->menuHandler->get($this->theme->primaryMenuId);
         Inertia::share('menuList',$this->menuHandler->getMenuObject());
+        Inertia::share('breadCrumb',$primary_menu->crumbMenu()->all());
+
         Inertia::share('locale',App::currentLocale());
 
         $component = [

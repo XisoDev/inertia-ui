@@ -27,11 +27,23 @@ class MenuHandler extends Menu
         $menuList = [];
         foreach($this->all() as $menuId => $menu){
             $menuList[$menuId] = [];
-            foreach($menu->sortBy('order')->all() as $menuItem){
+            foreach($menu->topMenu()->sortBy('order')->all() as $menuItem){
                 $menuItem->url = $menuItem->url();
-                $menuList[$menuId][] = $menuItem;
+                $menuList[$menuId][] = $this->buildMenuTree($menuItem);
             }
         }
         return $menuList;
+    }
+
+    private function buildMenuTree($menuItem){
+        $menuItem->children = [];
+        if($menuItem->hasChildren()){
+            $menuItem->url = $menuItem->url();
+            foreach($menuItem->children() as $child){
+                $menuItem->children[] = $this->buildMenuTree($child);
+            }
+        }
+
+        return $menuItem;
     }
 }
