@@ -62,6 +62,14 @@ button.clearButton{
             <span :class="prepend.class">{{ prepend.content }}</span>
         </template>
         <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <template v-if="field.value">
+                <div class="imgsPreview">
+                    <div class="imageHolder">
+                        {{ field.value }}
+                        <img v-for="image in field.value" :src="image" />
+                    </div>
+                </div>
+            </template>
             <div class="mt-1 sm:mt-0 sm:col-span-4">
                 <UploadImages @changed="handleImages" maxError="이미지를 더 추가할 수 없습니다." :uploadMsg="field.description" fileError="허용되지 않은 파일을 업로드 시도 했습니다." clearAll="비우기" :max="field.attributes.max" />
             </div>
