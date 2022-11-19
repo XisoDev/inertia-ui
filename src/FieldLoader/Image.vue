@@ -1,15 +1,13 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import UploadImages from "vue-upload-drop-images";
+import DropImages from "@fieldLoader/Components/DropImages.vue";
 
 const props = defineProps({
     modelValue: Object,
     field: Object,
 });
 
-const emit = defineEmits(['update:modelValue']);
-
-const input = ref(props.modelValue);
+const emit = defineEmits(['changed']);
 
 onMounted(() => {
 
@@ -17,8 +15,7 @@ onMounted(() => {
 
 //methods
 function handleImages(files){
-    input.value = files;
-    // emit("update:modelValue", files);
+    emit("changed", files);
 }
 
 defineExpose({ focus: () => input.value.focus() });
@@ -62,16 +59,8 @@ button.clearButton{
             <span :class="prepend.class">{{ prepend.content }}</span>
         </template>
         <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-            <template v-if="field.value">
-                <div class="imgsPreview">
-                    <div class="imageHolder">
-                        {{ field.value }}
-                        <img v-for="image in field.value" :src="image" />
-                    </div>
-                </div>
-            </template>
             <div class="mt-1 sm:mt-0 sm:col-span-4">
-                <UploadImages @changed="handleImages" maxError="이미지를 더 추가할 수 없습니다." :uploadMsg="field.description" fileError="허용되지 않은 파일을 업로드 시도 했습니다." clearAll="비우기" :max="field.attributes.max" />
+                <DropImages @changed="handleImages" :uploaded="field.originUploaded" maxError="이미지를 더 추가할 수 없습니다." :uploadMsg="field.description" fileError="허용되지 않은 파일을 업로드 시도 했습니다." clearAll="비우기" :max="field.attributes.max" />
             </div>
         </div>
         <template v-for="append in field['appends']">

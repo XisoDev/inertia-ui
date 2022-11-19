@@ -90,7 +90,7 @@ class Tenant extends BaseTenant  implements HasMedia
 
         $section->addField('image','main_logo')
             ->setTitle('로고')
-            ->addAttr('max',1)
+            ->addAttr('max',3)
             ->setDescription('주 색상포인트가 반영된 로고를 업로드합니다.')->setPlaceHolder();
 
         $section = $formHandler->createSection('theme_options')

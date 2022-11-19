@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { onMounted, defineProps, defineEmits } from 'vue';
 import Image from '@fieldLoader/Image.vue';
 import File from '@fieldLoader/File.vue';
 
@@ -8,9 +8,11 @@ const props = defineProps({
     modelValue: Object,
 });
 
-onMounted(() => {
-    console.log("v-model value in loader : " + props.modelValue);
-});
+const emit = defineEmits(['update:modelValue']);
+//methods
+function handleImages(files){
+    emit('update:modelValue', files);
+}
 
 defineExpose({ focus: () => input.value.focus() });
 </script>
@@ -18,7 +20,7 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <template v-if="field.type === 'image'">
         <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title }} </label>
-        <Image :field="field" v-model="props.modelValue" @input="$emit('update:modelValue', $event.target.files)" />
+        <Image :field="field" v-model="props.modelValue"  @changed="handleImages" />
     </template>
     <template v-else-if="field.type === 'file'">
         <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title }} </label>

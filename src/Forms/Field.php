@@ -8,6 +8,7 @@ class Field{
     public string $type = 'text';
     public string $id = '';
     public mixed $value;
+    public array $originUploaded = [];
     public string $class = '';
 
     public bool $fixed = false;
@@ -49,7 +50,15 @@ class Field{
 
     public function setValue($value): static
     {
-        $this->value = $value;
+        switch($this->type){
+            case "image" :
+                $this->originUploaded = $value;
+                $this->value = [];
+                break;
+            default:
+                $this->value = $value;
+                break;
+        }
         return $this;
     }
 
