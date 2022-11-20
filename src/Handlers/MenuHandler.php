@@ -14,6 +14,7 @@ class MenuHandler extends Menu
     }
 
     public function setMenuList(array $menuList){
+//        dd("확인");
         foreach($menuList as $menuId){
             $this->make($menuId, function(Builder $menu) use ($menuId){
                 apply_filters('inertia_menu_' . $menuId, $menu);
