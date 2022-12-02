@@ -1,46 +1,43 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 
 const props = defineProps({
     modelValue: String,
     field: Object,
-    options : Object,
 });
 
-defineEmits(['update:modelValue']);
+const input = ref(props.modelValue);
+const emit = defineEmits(['update:modelValue']);
 
-const input = ref(null);
 
-onMounted(() => {
-    console.log("list item getting props this : ",props);
-    if(typeof props.options === 'undefined'){
-        props.options = props.field.options;
-    }
-});
+watch(input, (x) => {
+    // props.modelValue = x;
+    emit('update:modelValue', x);
+})
 
 defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <div class="mt-1 rounded-md shadow-sm flex">
+    <div class="mt-1 rounded-md flex mb-2">
         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
             <button
-                v-for="(option, i) in props.options"
-                :key="option.value"
+                v-for="(optionGroup, i) in field.options"
+                :key="i"
                 type="button"
-                class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
+                class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none"
                 :class="{'border-t border-gray-200 rounded-t-none': i > 0, 'rounded-b-none': i !== Object.keys(field.options).length - 1}"
-                @click="modelValue = option.value"
+                @click="input = optionGroup.value"
             >
-                <div :class="{'opacity-50': modelValue && modelValue !== option.value}">
+                <div :class="{'opacity-50': input && input !== optionGroup.value}">
                     <!-- Role Name -->
                     <div class="flex items-center">
-                        <div class="text-sm text-gray-600" :class="{'font-semibold': modelValue === option.value}">
-                            {{ option.text }}
+                        <div class="text-sm text-gray-600" :class="{'font-semibold': input === optionGroup.value}">
+                            {{ optionGroup.text }}
                         </div>
 
                         <svg
-                            v-if="modelValue === option.value"
+                            v-if="input === optionGroup.value"
                             class="ml-2 h-5 w-5 text-green-400"
                             fill="none"
                             stroke-linecap="round"
@@ -52,8 +49,8 @@ defineExpose({ focus: () => input.value.focus() });
                     </div>
 
                     <!-- Role Description -->
-                    <div class="mt-2 text-xs text-gray-600 text-left" v-if="option.description">
-                        {{ option.description }}
+                    <div class="mt-2 text-xs text-gray-600 text-left" v-if="optionGroup.description">
+                        {{ optionGroup.description }}
                     </div>
                 </div>
             </button>

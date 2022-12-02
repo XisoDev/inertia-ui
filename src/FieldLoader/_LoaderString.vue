@@ -30,7 +30,7 @@ defineExpose({ focus: () => input.value.focus() });
     </template>
     <template v-else-if="field.type === 'list-item'">
         <label :for="field.id" class="block text-sm font-medium text-gray-700"> {{ field.title }} </label>
-        <ListItem :field="field" v-model="props.modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+        <ListItem :field="field" v-model="props.modelValue" @update:modelValue="value => $emit('update:modelValue', value)" />
     </template>
     <template v-else-if="field.type === 'radio-group'">
         <h4 class="block text-md font-medium text-gray-700 mb-4"> {{ field.title }} </h4>

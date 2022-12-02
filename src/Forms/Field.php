@@ -33,7 +33,7 @@ class Field{
         $this->type = $type;
         $this->id = $id;
 
-        if($type == 'select') $this->options['_default'] = $this->getOptionObject('');
+//        if($type == 'select') $this->options['_default'] = $this->getOptionObject('');
         if(in_array($type,['list-group','radio-group'])){
             $this->isGroup = true;
         }
