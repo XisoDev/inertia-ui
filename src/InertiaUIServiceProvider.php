@@ -54,6 +54,8 @@ class InertiaUIServiceProvider extends ServiceProvider
             __DIR__.'/config/media-library.php' => config_path('media-library.php'),
         ],'xisoui-config');
 
+        //load migration
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->publishes([
             __DIR__.'/database/migrations' => database_path('migrations'),
         ], 'xisoui-migrations');

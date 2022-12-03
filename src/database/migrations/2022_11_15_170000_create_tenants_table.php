@@ -22,7 +22,7 @@ class CreateTenantsTable extends Migration
             $table->string('type')->index();
             $table->uuid('parent_id')->index();
 
-            $table->string('hostname')->unique();
+            $table->string('hostname')->unique()->nullable();
             $table->foreignUuid('theme_config_id');
             $table->json('title')->nullable();
             $table->json('description')->nullable();
