@@ -25,19 +25,23 @@ class ThemeHandler{
 
     public MenuHandler $menuHandler;
 
-    #[NoReturn] public function __construct($hostname = false)
+    #[NoReturn] public function __construct($hostname = false, $theme_id = '')
     {
         $this->defaultThemePath = resource_path('/themes/');
         $this->menuHandler = new MenuHandler();
 
-        $tenant = $hostname ?
-            Tenant::where('hostname',$hostname)->with('themeConfig')->first()
-            : $this->getCurrentTenant();
-        if($tenant->id){
-            $this->tenant = $tenant;
-            $this->set($tenant->themeConfig->theme_id);
+        if($theme_id != ''){
+            $this->set($theme_id);
         }else{
-            $this->set('default');
+            $tenant = $hostname ?
+                Tenant::where('hostname',$hostname)->with('themeConfig')->first()
+                : $this->getCurrentTenant();
+            if($tenant->id){
+                $this->tenant = $tenant;
+                $this->set($tenant->themeConfig->theme_id);
+            }else{
+                $this->set('default');
+            }
         }
     }
 

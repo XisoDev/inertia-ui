@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 
+use Laravel\Jetstream\Jetstream;
 use Xiso\InertiaUI\Console\CreateThemeCommand;
 use Xiso\InertiaUI\Console\InstallCommand;
 
 use Xiso\InertiaUI\Handlers\ThemeHandler;
+use Xiso\InertiaUI\Services\InertiaManager;
 
 class InertiaUIServiceProvider extends ServiceProvider
 {
@@ -68,42 +70,53 @@ class InertiaUIServiceProvider extends ServiceProvider
      */
     protected function bootInertia()
     {
+        $inertiaManager = new InertiaManager();
 
-        Fortify::loginView(function () { $themeHandler = new ThemeHandler();
+        //jet stream의 inertia render 를 themehander 에있는 render로 바꿔치기한다.
+        Jetstream::$inertiaManager = $inertiaManager;
+
+        Fortify::loginView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/Login', [
                 'canResetPassword' => Route::has('password.request'),
                 'status' => session('status'),
             ]);
         });
 
-        Fortify::requestPasswordResetLinkView(function () { $themeHandler = new ThemeHandler();
+        Fortify::requestPasswordResetLinkView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/ForgotPassword', [
                 'status' => session('status'),
             ]);
         });
 
-        Fortify::resetPasswordView(function (Request $request) { $themeHandler = new ThemeHandler();
+        Fortify::resetPasswordView(function (Request $request) {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/ResetPassword', [
                 'email' => $request->input('email'),
                 'token' => $request->route('token'),
             ]);
         });
 
-        Fortify::registerView(function () { $themeHandler = new ThemeHandler();
+        Fortify::registerView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/Register');
         });
 
-        Fortify::verifyEmailView(function () { $themeHandler = new ThemeHandler();
+        Fortify::verifyEmailView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/VerifyEmail', [
                 'status' => session('status'),
             ]);
         });
 
-        Fortify::twoFactorChallengeView(function () { $themeHandler = new ThemeHandler();
+        Fortify::twoFactorChallengeView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/TwoFactorChallenge');
         });
 
-        Fortify::confirmPasswordView(function () { $themeHandler = new ThemeHandler();
+        Fortify::confirmPasswordView(function () {
+            $themeHandler = new ThemeHandler();
             return $themeHandler->render('Auth/ConfirmPassword');
         });
     }
