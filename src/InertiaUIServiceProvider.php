@@ -23,7 +23,10 @@ class InertiaUIServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__ . "/config/media-library.php",'media-library');
+        $this->mergeConfigFrom(__DIR__ . "/config/tenancy.php",'tenancy');
+        $this->mergeConfigFrom(__DIR__ . "/config/inertia-ui.php",'inertia-ui');
+        $this->mergeConfigFrom(__DIR__ . "/config/jetstream.php",'jetstream');
     }
 
     /**
@@ -54,6 +57,7 @@ class InertiaUIServiceProvider extends ServiceProvider
             __DIR__.'/config/tenancy.php' => config_path('tenancy.php'),
             __DIR__.'/config/inertia-ui.php' => config_path('inertia-ui.php'),
             __DIR__.'/config/media-library.php' => config_path('media-library.php'),
+            __DIR__.'/config/jetstream.php' => config_path('jetstream.php'),
         ],'xisoui-config');
 
         //load migration

@@ -1,9 +1,9 @@
 <?php
 namespace Xiso\InertiaUI\Console;
 
-use Illuminate\Console\Command;
+use Illuminate\Console\Command as BaseCommand;
 
-class InstallCommand extends Command
+class InstallCommand extends BaseCommand
 {
     /**
      * The name and signature of the console command.
@@ -29,9 +29,13 @@ class InstallCommand extends Command
         $target = __DIR__ . '/../FieldLoader';
         $shortcut = resource_path('FieldLoader');
 
-        $this->info(sprintf("try create symlink %s to %s",$target, $shortcut));
-        symlink($target, $shortcut);
+        if(!file_exists($shortcut)) {
+            $this->info(sprintf("try create symlink %s to %s", $target, $shortcut));
+            symlink($target, $shortcut);
+        }else{
+            $this->info(sprintf('skipped create sym link %s (file exists)',$shortcut));
+        }
 
-        return Command::SUCCESS;
+        return BaseCommand::SUCCESS;
     }
 }

@@ -19,7 +19,7 @@ defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <div class="mt-1 rounded-md flex mb-2">
+    <div class="col-span-6 lg:col-span-4">
         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
             <button
                 v-for="(optionGroup, i) in field.options"
