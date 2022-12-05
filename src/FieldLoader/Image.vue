@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import DropImages from "@fieldLoader/Components/DropImages.vue";
+import DropImages from "@fieldLoaderComponents/DropImages.vue";
 
 const props = defineProps({
     modelValue: Object,
