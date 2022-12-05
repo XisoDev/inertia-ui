@@ -40,7 +40,7 @@ class ThemeHandler{
                 $this->tenant = $tenant;
                 $this->set($tenant->themeConfig->theme_id);
             }else{
-                $this->set('default');
+                $this->set(env('MAIN_THEME','default'));
             }
         }
     }
