@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, defineProps, defineEmits } from 'vue';
+import { defineEmits } from 'vue';
 import Image from '@fieldLoader/Image.vue';
 import File from '@fieldLoader/File.vue';
 

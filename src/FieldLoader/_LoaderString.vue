@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { onMounted } from 'vue';
 import InputText from '@fieldLoader/InputText.vue';
 import TextArea from '@fieldLoader/Textarea.vue';
 import ListItem from '@fieldLoader/ListItem.vue';
